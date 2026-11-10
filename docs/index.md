@@ -1,16 +1,16 @@
-# omnifund/liberapay
+# omnipulse/liberapay
 
-Liberapay for [omnisense/omnifund](https://github.com/glitchr-omnisense/omnifund): an account's
+Liberapay for [omnisense/omnipulse](https://github.com/glitchr-omnisense/omnipulse): an account's
 public profile read from `https://liberapay.com/<user>/public.json` - the patrons counted, what it
 receives and its goal (by the week, as Liberapay counts), its summary. One `GET`, no key.
 
 ## Installation
 
 ```sh
-composer require omnifund/liberapay symfony/http-client
+composer require omnipulse/liberapay symfony/http-client
 ```
 
-Requires PHP 8.2, `omnisense/omnifund` (1.x) and `symfony/http-client-contracts` (^3.0): the
+Requires PHP 8.2, `omnisense/omnipulse` (1.x) and `symfony/http-client-contracts` (^3.0): the
 application gives the HTTP client to the factory's constructor. No library is wrapped: there is
 none, and the endpoint is one JSON document.
 
@@ -26,7 +26,7 @@ None: `public.json` is public. Liberapay is run by a non-profit on donations: se
 | `account` | string | - | yes | the username: `Liberapay` |
 | `language` | string | `en` | no | the summary's language, when the account wrote several; else the first one |
 | `base_url` | string | `https://liberapay.com` | no | |
-| `user_agent` | string | `omnifund (+https://github.com/glitchr-omnisense/omnifund)` | no | sent with every call |
+| `user_agent` | string | `omnipulse (+https://github.com/glitchr-omnisense/omnipulse)` | no | sent with every call |
 
 ## Capabilities
 
@@ -63,7 +63,7 @@ An account hiding what it receives (`receiving: null`, `goal: null`) has `income
 
 ## Example
 
-The core's [installation page](https://github.com/glitchr-omnisense/omnifund/blob/1.x/docs/installation.md)
+The core's [installation page](https://github.com/glitchr-omnisense/omnipulse/blob/1.x/docs/installation.md)
 has a complete script on this provider, run as written by the core's tests on a recorded answer:
 
 ```php
@@ -71,8 +71,8 @@ has a complete script on this provider, run as written by the core's tests on a 
 
 require __DIR__.'/vendor/autoload.php';
 
-use Omnifund\Liberapay\LiberapayFactory;
-use Omnifund\Registry;
+use Omnipulse\Liberapay\LiberapayFactory;
+use Omnipulse\Registry;
 use Symfony\Component\HttpClient\HttpClient;
 
 $registry = new Registry([new LiberapayFactory(HttpClient::create(['timeout' => 10]))], [

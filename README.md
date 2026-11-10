@@ -1,12 +1,15 @@
-# omnifund/liberapay
+# omnipulse/liberapay
 
-Liberapay for [omnisense/omnifund](https://github.com/glitchr-omnisense/omnifund), under any PHP
+Liberapay for [omnisense/omnipulse](https://github.com/glitchr-omnisense/omnipulse), under any PHP
 host: an account's public profile read from `https://liberapay.com/<user>/public.json` - patrons
 counted, what it receives and its goal (by the week, as Liberapay counts), its summary. No key.
 
+Formerly `omnifund/liberapay` (omnifund merged into omnipulse on 2026-11-10: `Omnifund\Liberapay\` is now
+`Omnipulse\Liberapay\`; this package replaces the former name).
+
 ```php
-use Omnifund\Liberapay\LiberapayFactory;
-use Omnifund\Registry;
+use Omnipulse\Liberapay\LiberapayFactory;
+use Omnipulse\Registry;
 
 $registry = new Registry([new LiberapayFactory($httpClient)], [
     'liberapay' => ['factory' => 'liberapay', 'options' => ['account' => 'Liberapay']],

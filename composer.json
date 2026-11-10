@@ -1,9 +1,16 @@
 {
-    "name": "omnifund/liberapay",
+    "name": "omnipulse/liberapay",
     "type": "library",
-    "description": "Omnifund's Liberapay, under any PHP host: an account's public profile read from Liberapay's public.json - patrons counted, weekly income, goal, summary (no key; Liberapay keeps patrons and tiers private).",
-    "keywords": ["donations", "liberapay", "funding", "patrons", "framework-agnostic", "omnifund"],
-    "homepage": "https://github.com/glitchr-omnisense/omnifund-liberapay",
+    "description": "Omnipulse's Liberapay, under any PHP host: an account's public profile read from Liberapay's public.json - patrons counted, weekly income, goal, summary (no key; Liberapay keeps patrons and tiers private).",
+    "keywords": [
+        "donations",
+        "liberapay",
+        "funding",
+        "patrons",
+        "framework-agnostic",
+        "omnipulse"
+    ],
+    "homepage": "https://github.com/glitchr-omnisense/omnipulse-liberapay",
     "license": "MIT",
     "authors": [
         {
@@ -13,16 +20,19 @@
     ],
     "require": {
         "php": ">=8.2",
-        "omnisense/omnifund": "^1.0@dev",
+        "omnisense/omnipulse": "^1.0@dev",
         "symfony/http-client-contracts": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
         "symfony/http-client": "^6.4|^7.0|^8.0"
     },
+    "replace": {
+        "omnifund/liberapay": "self.version"
+    },
     "autoload": {
         "psr-4": {
-            "Omnifund\\Liberapay\\": ""
+            "Omnipulse\\Liberapay\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -30,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Omnifund\\Liberapay\\Tests\\": "Tests/"
+            "Omnipulse\\Liberapay\\Tests\\": "Tests/"
         }
     },
     "extra": {

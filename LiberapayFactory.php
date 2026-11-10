@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnifund\Liberapay;
+namespace Omnipulse\Liberapay;
 
-use Omnifund\Config;
-use Omnifund\ProviderFactory;
-use Omnifund\ProviderInterface;
+use Omnipulse\Config;
+use Omnipulse\ProviderFactory;
+use Omnipulse\ProviderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -24,12 +24,12 @@ final class LiberapayFactory extends ProviderFactory
     protected function populate(Config $c): void
     {
         $c->defaults([
-            'omnifund.factory_name' => 'liberapay',
-            'omnifund.factory_title' => 'Liberapay',
-            'omnifund.required_options' => ['account'],
+            'omnipulse.factory_name' => 'liberapay',
+            'omnipulse.factory_title' => 'Liberapay',
+            'omnipulse.required_options' => ['account'],
             'language' => 'en',
             'base_url' => LiberapayProvider::BASE_URL,
-            'user_agent' => 'omnifund (+https://github.com/glitchr-omnisense/omnifund)',
+            'user_agent' => 'omnipulse (+https://github.com/glitchr-omnisense/omnipulse)',
         ]);
     }
 

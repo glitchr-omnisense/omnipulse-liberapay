@@ -1,13 +1,13 @@
 <?php
 
-namespace Omnifund\Liberapay\Tests;
+namespace Omnipulse\Liberapay\Tests;
 
-use Omnifund\Exception\NotSupportedException;
-use Omnifund\Exception\ProviderException;
-use Omnifund\Liberapay\LiberapayFactory;
-use Omnifund\Liberapay\LiberapayProvider;
-use Omnifund\Model\Period;
-use Omnifund\Registry;
+use Omnipulse\Exception\NotSupportedException;
+use Omnipulse\Exception\ProviderException;
+use Omnipulse\Liberapay\LiberapayFactory;
+use Omnipulse\Liberapay\LiberapayProvider;
+use Omnipulse\Model\Period;
+use Omnipulse\Registry;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -31,7 +31,7 @@ final class LiberapayProviderTest extends TestCase
         self::assertSame(['1000.00', Period::Week, 63], [$profile->goal?->amount?->decimal(), $profile->goal?->period, $profile->goal?->percent]);
 
         self::assertSame(['GET', 'https://liberapay.com/Liberapay/public.json'], [$this->requests[0]['method'], $this->requests[0]['url']]);
-        self::assertContains('User-Agent: omnifund (+https://github.com/glitchr-omnisense/omnifund)', $this->headers(0));
+        self::assertContains('User-Agent: omnipulse (+https://github.com/glitchr-omnisense/omnipulse)', $this->headers(0));
     }
 
     public function testAnAccountThatHidesWhatItReceives(): void
