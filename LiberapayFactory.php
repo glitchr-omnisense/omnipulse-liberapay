@@ -35,6 +35,6 @@ final class LiberapayFactory extends ProviderFactory
 
     protected function build(Config $c): ProviderInterface
     {
-        return new LiberapayProvider($this->http, (string) $c->string('account'), $c->string('language') ?? 'en', $c->string('base_url') ?? LiberapayProvider::BASE_URL, (string) $c->string('user_agent'));
+        return new LiberapayProvider($this->http, (string) $c->string('account'), $c->string('language') ?? 'en', $c->string('base_url') ?? LiberapayProvider::BASE_URL, (string) $c->string('user_agent'), $c->backoff());
     }
 }

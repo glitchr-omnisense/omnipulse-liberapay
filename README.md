@@ -33,6 +33,15 @@ Liberapay's [legal information](https://liberapay.com/about/legal) and
 donations: send a User-Agent naming your application, and cache what you read (its data changes
 weekly).
 
+## Usage policy
+
+Liberapay's usage policy is declared as data in [`policy.json`](policy.json) (omnisense/contracts'
+schema, named in `composer.json`'s `extra.omnisense.policy`), its terms read on
+2026-11-10 (https://liberapay.com/about/faq): no rate limit declared, rights unknown: Liberapay publishes no API terms; no key. omnipulse's registry enforces it - a call over a
+limit is never made, a 429 and its `Retry-After` hold every next call
+(`UsageLimitReachedException`) - and a site may tighten it, never loosen it
+(omnisense/omnipulse's docs/policies.md).
+
 ## Verified, and not
 
 - Verified on recorded answers (the Liberapay team's public.json of 2026-10-24, shortened): the

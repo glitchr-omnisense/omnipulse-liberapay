@@ -10,6 +10,9 @@ use Omnipulse\Model\Money;
 use Omnipulse\Model\Period;
 use Omnipulse\Model\Profile;
 use Omnipulse\ProfileInterface;
+use Omnisense\Contracts\Policy\Backoff;
+use Omnisense\Contracts\Policy\DeclaresUsagePolicyInterface;
+use Omnisense\Contracts\Policy\UsagePolicy;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -18,8 +21,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * Liberapay counts them; null when the account hides them. Liberapay shows
  * no patron by name and has no tiers: this provider is a profile only.
  */
-final class LiberapayProvider implements ProfileInterface
+final class LiberapayProvider implements ProfileInterface, DeclaresUsagePolicyInterface
 {
+    /** Liberapay's usage policy, as its terms read on the day it says (provenance.verifiedAt). */
+    public const POLICY = __DIR__.'/policy.json';
+
+    private static ?UsagePolicy $policy = null;
+
     public const BASE_URL = 'https://liberapay.com';
 
     public function __construct(
@@ -28,6 +36,7 @@ final class LiberapayProvider implements ProfileInterface
         private readonly string $language = 'en',
         private readonly string $baseUrl = self::BASE_URL,
         private readonly string $userAgent = 'omnipulse (+https://github.com/glitchr-omnisense/omnipulse)',
+        private readonly ?Backoff $backoff = null,
     ) {
     }
 
@@ -41,16 +50,21 @@ final class LiberapayProvider implements ProfileInterface
         return 'Liberapay';
     }
 
+    public function usagePolicy(): UsagePolicy
+    {
+        return self::$policy ??= UsagePolicy::fromFile(self::POLICY);
+    }
+
     public function capabilities(): Capabilities
     {
-        return new Capabilities(profile: true, key: false, terms: ['https://liberapay.com/about/legal', 'https://liberapay.com/about/privacy']);
+        return new Capabilities(profile: true, key: false, terms: ['https://liberapay.com/about/legal', 'https://liberapay.com/about/privacy'], policy: $this->usagePolicy());
     }
 
     public function profile(?string $account = null): Profile
     {
         $account ??= $this->account;
         $url = rtrim($this->baseUrl, '/').'/'.rawurlencode($account);
-        $data = Json::request($this->http, 'GET', $url.'/public.json', ['headers' => ['User-Agent' => $this->userAgent, 'Accept' => 'application/json']], 'Liberapay', "the account $account");
+        $data = Json::request($this->http, 'GET', $url.'/public.json', ['headers' => ['User-Agent' => $this->userAgent, 'Accept' => 'application/json']], 'Liberapay', "the account $account", $this->backoff);
         $receiving = self::money(Json::get($data, 'receiving'));
         $goal = self::money(Json::get($data, 'goal'));
         $handle = Json::string($data, 'username') ?? $account;
