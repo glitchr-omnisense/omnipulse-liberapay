@@ -7,6 +7,36 @@ counted, what it receives and its goal (by the week, as Liberapay counts), its s
 Formerly `omnifund/liberapay` (omnifund merged into omnipulse on 2026-11-10: `Omnifund\Liberapay\` is now
 `Omnipulse\Liberapay\`; this package replaces the former name).
 
+## Install and a first call
+
+```sh
+composer require omnipulse/liberapay
+```
+
+No account for this first call: Liberapay's public profile is recorded
+(`Omnipulse\Testing\RecordedHttpClient` answers in place of the API), so nothing leaves the process.
+A real call needs no account and no key either, only an HTTP client.
+
+```php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Omnipulse\Liberapay\LiberapayFactory;
+use Omnipulse\Testing\RecordedHttpClient;
+
+// Liberapay's public profile, recorded: nothing sent. HttpClient::create() (symfony/http-client) for a real call.
+$http = RecordedHttpClient::routes([
+    'GET /Liberapay/public.json' => '{"username": "Liberapay", "kind": "group", "npatrons": 1782, "receiving": {"amount": "636.28", "currency": "EUR"}, "goal": {"amount": "1000.00", "currency": "EUR"}}',
+]);
+$liberapay = (new LiberapayFactory($http))->create(['account' => 'Liberapay']);
+
+$profile = $liberapay->profile();
+echo $profile->handle, ' ', $profile->sponsors, ' patrons, ', $profile->income?->monthly()?->decimal(), ' ', $profile->income?->monthly()?->currency, " a month\n";   // Liberapay 1782 patrons, 2757.21 EUR a month
+```
+
+With your credentials, through the family's registry:
+
 ```php
 use Omnipulse\Liberapay\LiberapayFactory;
 use Omnipulse\Registry;
